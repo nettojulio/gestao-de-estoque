@@ -12,18 +12,18 @@ int opcao;
 
 /* Menu pricipal com as opcoes disponiveis */
 void menu() {
-    Estoque *estoque;
-    inicializarEstoque(estoque);
+    Estoque estoque;
+    inicializarEstoque(&estoque);
     executeMenu();
     while (opcao != 0) {
         switch (opcao) {
             case 1:
                 printf("\nLISTAR\n\n");
-                exibirEstoque(estoque);
+                exibirEstoque(&estoque);
                 break;
             case 2:
                 printf("\nINSERIR\n\n");
-                adicionarProduto(estoque, 1, "Banana", 2, 1999.99);
+                adicionarProduto(&estoque, 1, "Banana", 2, 1999.99);
                 break;
             case 3:
                 printf("\nREMOVER\n\n");
@@ -33,8 +33,8 @@ void menu() {
                 break;
             case 5:
                 printf("\nTAMANHO\n\n");
-                printf("Tamanho atual: %d\nCapacidade Total: %d\n", tamanhoEstoque(estoque),
-                       capacidadeEstoque(estoque));
+                printf("Tamanho atual: %d\nCapacidade Total: %d\n", tamanhoEstoque(&estoque),
+                       capacidadeEstoque(&estoque));
                 break;
             default:
                 printf("\nOPÇÃO INVÁLIDA\n\n");
