@@ -11,6 +11,7 @@ void insertMenu();
 
 int opcao;
 Estoque estoque;
+Produto produto;
 
 /* Menu pricipal com as opcoes disponiveis */
 void menu() {
@@ -24,7 +25,7 @@ void menu() {
                 break;
             case 2:
                 printf("\nINSERIR\n\n");
-                adicionarProduto(&estoque, 1, "Banana", 2, 1999.99);
+                insertMenu();
                 break;
             case 3:
                 printf("\nREMOVER\n\n");
@@ -65,5 +66,13 @@ void executeMenu() {
 }
 
 void insertMenu(){
-
+    printf("Insira o código:");
+    scanf("%d", &produto.codigo);
+    printf("Insira o nome:");
+    scanf("%s", produto.nome);
+    printf("Insira a quantidade:");
+    scanf("%d", &produto.quantidade);
+    printf("Insira o preço:");
+    scanf("%lf", &produto.preco);
+    adicionarProduto(&estoque, produto.codigo , produto.nome, produto.quantidade, produto.preco);
 }
