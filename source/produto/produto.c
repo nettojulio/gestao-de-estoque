@@ -94,3 +94,46 @@ int tamanhoEstoque(Estoque *estoque) {
 int capacidadeEstoque(Estoque *estoque) {
     return estoque->capacidade;
 }
+
+// Busca a posição do produto desejado com base no codigo
+int buscarPosicaoDoProduto(Estoque *estoque, int codigo) {
+    int searchIndex = -1;
+    for (int i = 0; i < estoque->tamanho; ++i) {
+        if (estoque->produtos[i].codigo == codigo) {
+            searchIndex = i;
+            break;
+        }
+    }
+    return searchIndex;
+}
+
+// Preenche com valores default a ultima posição do estoque
+void nularUltimoProduto(Estoque *estoque) {
+    estoque->produtos[estoque->tamanho - 1].codigo = USER_ADDR_NULL;
+
+    char nome[50];
+    stpcpy(estoque->produtos[estoque->tamanho - 1].nome, nome);
+
+    estoque->produtos[estoque->tamanho - 1].quantidade = USER_ADDR_NULL;
+    estoque->produtos[estoque->tamanho - 1].preco = USER_ADDR_NULL;
+
+    printf("%s", estoque->produtos[estoque->tamanho - 1].nome);
+}
+
+// Remove um produto com base no codigo informado
+void removerProduto(Estoque *estoque, int codigo) {
+    int searchIndex = buscarPosicaoDoProduto(estoque, codigo);
+    if (searchIndex == -1) {
+        printf("\n\033[1;31m[ ERRO ]: CÓDIGO NÃO ENCONTRADO!\033[0m\n\n");
+        return;
+    }
+
+    for (int i = searchIndex; i < estoque->tamanho - 1; ++i) {
+        estoque->produtos[i] = estoque->produtos[i + 1];
+    }
+    nularUltimoProduto(estoque);
+    estoque->tamanho--;
+
+    printf("\033[1;32mPRODUTO REMOVIDO!\033[0m\n\n");
+}
+

@@ -20,6 +20,7 @@ typedef struct {
 } Estoque;
 
 // Protótipos das funções
+
 void inicializarEstoque(Estoque *estoque);
 
 void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quantidade, double preco);
@@ -31,5 +32,9 @@ void liberarEstoque(Estoque *estoque);
 int tamanhoEstoque(Estoque *estoque);
 
 int capacidadeEstoque(Estoque *estoque);
+
+int buscarPosicaoDoProduto(Estoque *estoque, int codigo);
+
+void removerProduto(Estoque *estoque, int codigo);
 
 #endif //GESTAO_DE_ESTOQUE_PRODUTO_H
