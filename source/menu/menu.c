@@ -7,12 +7,13 @@
 #include "../produto/produto.h"
 
 void executeMenu();
+void insertMenu();
 
 int opcao;
+Estoque estoque;
 
 /* Menu pricipal com as opcoes disponiveis */
 void menu() {
-    Estoque estoque;
     inicializarEstoque(&estoque);
     executeMenu();
     while (opcao != 0) {
@@ -37,7 +38,7 @@ void menu() {
                        capacidadeEstoque(&estoque));
                 break;
             default:
-                printf("\nOPÇÃO INVÁLIDA\n\n");
+                printf("\n\033[1;31m[ ERRO ]: OPÇÃO INVÁLIDA!\033[0m\n\n");
         }
         executeMenu();
     }
@@ -50,7 +51,7 @@ void listagemDeOpcoes() {
     printf("3 - Remover produto\n");
     printf("4 - Procurar produto\n");
     printf("5 - Tamanho do estoque\n");
-    printf("0 - SAIR\n");
+    printf("0 - SAIR\n\n");
 }
 
 void escolherOpcao() {
@@ -61,4 +62,8 @@ void escolherOpcao() {
 void executeMenu() {
     listagemDeOpcoes();
     escolherOpcao();
+}
+
+void insertMenu(){
+
 }

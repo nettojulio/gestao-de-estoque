@@ -22,10 +22,10 @@ void inicializarEstoque(Estoque *estoque) {
 }
 
 // Adiciona um produto ao estoque
-void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quantidade, float preco) {
+void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quantidade, double preco) {
     // Verifica se há espaço suficiente no array
     if (estoque->tamanho == estoque->capacidade) {
-        // Se não houver espaço suficiente, redimensiona o array
+        // Se não houver espaço suficiente, redimensiona o array com mais 10 posições
         estoque->capacidade += 10;
         estoque->produtos = (Produto *) realloc(estoque->produtos, estoque->capacidade * sizeof(Produto));
         if (estoque->produtos == NULL) {
@@ -34,21 +34,50 @@ void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quant
         }
     }
 
+    for (int i = 0; i < estoque->tamanho; ++i) {
+        if (estoque->produtos[i].codigo == codigo) {
+            printf("\n\033[1;31m[ ERRO ]: CÓDIGO JÁ CADASTRADO!\033[0m\n");
+            printf("Código\t\tNome\t\t\t\tQuantidade\t\tPreço\n");
+            printf("%.06d\t\t%s\t\t\t\t%.10d\t\t%.2lf\n\n", estoque->produtos[i].codigo, estoque->produtos[i].nome,
+                   estoque->produtos[i].quantidade, estoque->produtos[i].preco);
+            return;
+        }
+
+        if (preco < 0) {
+            printf("\n\033[1;31m[ ERRO ]: PREÇO INVÁLIDO!\033[0m\n");
+            return;
+        }
+
+        if (quantidade < 0) {
+            printf("\n\033[1;31m[ ERRO ]: QUANTIDADE INVÁLIDA!\033[0m\n");
+            return;
+        }
+
+        if (strlen(nome) > 50 || strlen(nome) < 1) {
+            printf("\n\033[1;31m[ ERRO ]: NOME INVÁLIDO!\033[0m\n");
+            return;
+        }
+    }
+
+
+
     // Adiciona o produto ao array
     estoque->produtos[estoque->tamanho].codigo = codigo;
     strncpy(estoque->produtos[estoque->tamanho].nome, nome, sizeof(estoque->produtos[estoque->tamanho].nome) - 1);
     estoque->produtos[estoque->tamanho].quantidade = quantidade;
     estoque->produtos[estoque->tamanho].preco = preco;
     estoque->tamanho++;
+    printf("\033[1;32mPRODUTO CADASTRADO!\033[0m\n\n");
 }
 
 // Exibe o conteúdo do estoque
 void exibirEstoque(Estoque *estoque) {
     printf("Código\t\tNome\t\t\t\tQuantidade\t\tPreço\n");
     for (int i = 0; i < estoque->tamanho; ++i) {
-        printf("%.06d\t\t%s\t\t\t\t%.10d\t\t%.2f\n", estoque->produtos[i].codigo, estoque->produtos[i].nome,
+        printf("%.06d\t\t%s\t\t\t\t%.10d\t\t%.2lf\n", estoque->produtos[i].codigo, estoque->produtos[i].nome,
                estoque->produtos[i].quantidade, estoque->produtos[i].preco);
     }
+    printf("\n");
 }
 
 // Libera a memória alocada para o array de produtos

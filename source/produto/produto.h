@@ -9,20 +9,20 @@ typedef struct {
     int codigo;
     char nome[50];
     int quantidade;
-    float preco;
+    double preco;
 } Produto;
 
 // Estrutura que representa o estoque
 typedef struct {
-    Produto *produtos;  // Ponteiro para o array dinâmico de produtos
-    int capacidade;            // Número máximo de produtos que o array pode armazenar
-    int tamanho;               // Número atual de produtos no array
+    Produto *produtos;          // Ponteiro para o array dinâmico de produtos
+    int capacidade;             // Número máximo de produtos que o array pode armazenar
+    int tamanho;                // Número atual de produtos no array
 } Estoque;
 
 // Protótipos das funções
 void inicializarEstoque(Estoque *estoque);
 
-void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quantidade, float preco);
+void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quantidade, double preco);
 
 void exibirEstoque(Estoque *estoque);
 
