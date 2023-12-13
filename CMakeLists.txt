@@ -12,4 +12,6 @@ add_executable(gestao_de_estoque
         source/produto/produto.c
         source/produto/produto.h
         source/main.c
+        source/arquivo/arquivo.c
+        source/arquivo/arquivo.h)
         source/utils/utils.c)
