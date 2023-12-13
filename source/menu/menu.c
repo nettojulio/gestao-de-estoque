@@ -5,6 +5,7 @@
 #include "menu.h"
 #include <stdio.h>
 #include "../produto/produto.h"
+#include "../arquivo/arquivo.h"
 
 void executeMenu();
 
@@ -13,7 +14,7 @@ void insertMenu();
 int opcao;
 Estoque estoque;
 Produto produto;
-
+Arquivo arquivo;
 /* Menu pricipal com as opcoes disponiveis */
 void menu() {
     inicializarEstoque(&estoque);
@@ -80,4 +81,6 @@ void insertMenu() {
     printf("Insira o preço:");
     scanf("%lf", &produto.preco);
     adicionarProduto(&estoque, produto.codigo, produto.nome, produto.quantidade, produto.preco);
+    adicionar(&estoque);
 }
+

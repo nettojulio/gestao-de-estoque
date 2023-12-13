@@ -8,38 +8,38 @@
    - [x] Gestão de estoque;
    - [ ] Gestão de biblioteca.
 2. O sistema deve armazenar os dados cadastrados utilizando:
-   - [ ] Alocação dinâmica de memória.
+   - [x] Alocação dinâmica de memória.
    - [ ] Arquivos.
-   - [ ] Armazenar, inicialmente, 10 registros (alunos, tarefas, produtos ou livros).
-   - [ ] Aumentar a capacidade em 10 novos registros sempre que necessário com alocação dinâmica.
+   - [x] Armazenar, inicialmente, 10 registros (alunos, tarefas, produtos ou livros).
+   - [x] Aumentar a capacidade em 10 novos registros sempre que necessário com alocação dinâmica.
 3. Cada funcionalidade deve ser implementada:
-   - [ ] Usando uma função.
+   - [x] Usando uma função.
    - [ ] estar comentado
-   - [ ] ter tabulação correta
-   - [ ] seguir boas praticas de programação.
-   - [ ] definir um arquivo .h para definição dos protótipos das funções.
+   - [x] ter tabulação correta
+   - [x] seguir boas praticas de programação.
+   - [x] definir um arquivo .h para definição dos protótipos das funções.
 4. Deverá usar obrigatoriamente:
-   - [ ] constantes
-   - [ ] variáveis globais
-   - [ ] variáveis locais
-   - [ ] estruturas (struct)
-   - [ ] ponteiros
+   - [x] constantes
+   - [x] variáveis globais
+   - [x] variáveis locais
+   - [x] estruturas (struct)
+   - [x] ponteiros
    - [ ] arquivo de texto
    - [ ] módulos.
-   - [ ] As operações definidas para manipular a struct no vetor (inserção, remoção, inicialização, listagem dos elementos, tamanho) devem ser definidas no arquivo .h e implementadas no .c correspondente.
-   - [ ] A função main deverá ser implementada em outro arquivo .c que irá apenas utilizar usar as funções através da inclusão da biblioteca .h criada.
+   - [x] As operações definidas para manipular a struct no vetor (inserção, remoção, inicialização, listagem dos elementos, tamanho) devem ser definidas no arquivo .h e implementadas no .c correspondente.
+   - [x] A função main deverá ser implementada em outro arquivo .c que irá apenas utilizar usar as funções através da inclusão da biblioteca .h criada.
 
 ## FUNCIONALIDADES
 
 1. **Menu de opções**
-    - [ ] O menu imprime mensagens com opções das funcionalidades descritas abaixo e o usuário selecionará o índice da opção desejada.
-    - [ ] O menu será apresentado sempre que o usuário finalizar uma funcionalidade.
-    - [ ] O sistema encerrará quando o usuário selecionar a opção de “Sair”.
-    - [ ] Opções inválidas devem gerar um alerta de erro.
+    - [x] O menu imprime mensagens com opções das funcionalidades descritas abaixo e o usuário selecionará o índice da opção desejada.
+    - [x] O menu será apresentado sempre que o usuário finalizar uma funcionalidade.
+    - [x] O sistema encerrará quando o usuário selecionar a opção de “Sair”.
+    - [x] Opções inválidas devem gerar um alerta de erro.
 2. **Inserção**
-   - [ ] Funcionalidade para inserção de apenas um registro (aluno, tarefa, produto ou livro).
-   - [ ] Cada registro deve possuir identificador único. O sistema deve aumentar a capacidade de armazenamento em tempo de execução usando alocação dinâmica de memoria.
-   - [ ] Alertas de erro devem ser gerados (exemplos: registros com matrículas iguais, valores inválidos, etc).
+   - [x] Funcionalidade para inserção de apenas um registro (aluno, tarefa, produto ou livro).
+   - [x] Cada registro deve possuir identificador único. O sistema deve aumentar a capacidade de armazenamento em tempo de execução usando alocação dinâmica de memoria.
+   - [x] Alertas de erro devem ser gerados (exemplos: registros com matrículas iguais, valores inválidos, etc).
    - [ ] Esta funcionalidade também deve ser implementada de forma que os registros devem ser incluídos no fim do vetor;
 3. **Remoção**
     - [ ] O identificador deve ser informado (remoção por valor).

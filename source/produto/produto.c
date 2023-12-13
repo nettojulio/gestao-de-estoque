@@ -32,6 +32,7 @@ void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quant
             fprintf(stderr, "Erro na realocação de memória.\n");
             exit(EXIT_FAILURE);
         }
+
     }
 
     for (int i = 0; i < estoque->tamanho; ++i) {
@@ -108,7 +109,7 @@ int buscarPosicaoDoProduto(Estoque *estoque, int codigo) {
 }
 
 // Preenche com valores default a ultima posição do estoque
-void nularUltimoProduto(Estoque *estoque) {
+/*void nularUltimoProduto(Estoque *estoque) {
     estoque->produtos[estoque->tamanho - 1].codigo = USER_ADDR_NULL;
 
     char nome[50];
@@ -119,7 +120,7 @@ void nularUltimoProduto(Estoque *estoque) {
 
     printf("%s", estoque->produtos[estoque->tamanho - 1].nome);
 }
-
+*/
 // Remove um produto com base no codigo informado
 void removerProduto(Estoque *estoque, int codigo) {
     int searchIndex = buscarPosicaoDoProduto(estoque, codigo);
@@ -131,9 +132,9 @@ void removerProduto(Estoque *estoque, int codigo) {
     for (int i = searchIndex; i < estoque->tamanho - 1; ++i) {
         estoque->produtos[i] = estoque->produtos[i + 1];
     }
-    nularUltimoProduto(estoque);
+    /*nularUltimoProduto(estoque);
     estoque->tamanho--;
-
+*/
     printf("\033[1;32mPRODUTO REMOVIDO!\033[0m\n\n");
 }
 
