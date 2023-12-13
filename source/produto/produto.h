@@ -5,11 +5,13 @@
 #ifndef GESTAO_DE_ESTOQUE_PRODUTO_H
 #define GESTAO_DE_ESTOQUE_PRODUTO_H
 
+// Estrutura que representa um produto
 typedef struct {
-    int codigo;
-    char nome[50];
-    int quantidade;
-    double preco;
+    unsigned int codigo;        // Código do produto (Identificador único)
+    char descricao[50];         // Descrição do produto
+    char categoria[15];         // Categoria do produto
+    double preco;               // Preço do produto
+    unsigned int quantidade;    // Quantidade de produtos no estoque
 } Produto;
 
 // Estrutura que representa o estoque
@@ -23,15 +25,15 @@ typedef struct {
 
 void inicializarEstoque(Estoque *estoque);
 
-void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quantidade, double preco);
+void adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco, int quantidade);
 
 void exibirEstoque(Estoque *estoque);
-
-void liberarEstoque(Estoque *estoque);
 
 int tamanhoEstoque(Estoque *estoque);
 
 int capacidadeEstoque(Estoque *estoque);
+
+void buscarProduto(Estoque *estoque, int codigo);
 
 int buscarPosicaoDoProduto(Estoque *estoque, int codigo);
 

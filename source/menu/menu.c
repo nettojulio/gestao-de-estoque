@@ -7,51 +7,60 @@
 #include "../produto/produto.h"
 #include "../arquivo/arquivo.h"
 
-void executeMenu();
+void execucaoMenu();
 
-void insertMenu();
+void menuExibir();
+
+void menuInserir();
+
+void menuRemover();
+
+void menuProcurar();
+
+void menuTamanho();
 
 int opcao;
 Estoque estoque;
 Produto produto;
 Arquivo arquivo;
-/* Menu pricipal com as opcoes disponiveis */
+
+// Menu pricipal com as opcoes disponiveis
 void menu() {
     inicializarEstoque(&estoque);
-    executeMenu();
+    execucaoMenu();
     while (opcao != 0) {
         switch (opcao) {
             case 1:
                 printf("\nLISTAR\n\n");
-                exibirEstoque(&estoque);
+                menuExibir();
                 break;
             case 2:
                 printf("\nINSERIR\n\n");
-                insertMenu();
+                menuInserir();
                 break;
             case 3:
                 printf("\nREMOVER\n\n");
-                int codigo;
-                printf("Digite o código do produto que deseja remover: ");
-                scanf("%d", &codigo);
-                removerProduto(&estoque, codigo);
+                menuRemover();
                 break;
             case 4:
                 printf("\nPROCURAR\n\n");
+                menuProcurar();
                 break;
             case 5:
                 printf("\nTAMANHO\n\n");
-                printf("Tamanho atual: %d\nCapacidade Total: %d\n", tamanhoEstoque(&estoque),
-                       capacidadeEstoque(&estoque));
+                menuTamanho();
+                break;
+            case 6:
                 break;
             default:
                 printf("\n\033[1;31m[ ERRO ]: OPÇÃO INVÁLIDA!\033[0m\n\n");
         }
-        executeMenu();
+        execucaoMenu();
     }
     printf("Encerrando o programa...\n");
 }
 
+// Listagem das principais opções
 void listagemDeOpcoes() {
     printf("1 - Listar produtos\n");
     printf("2 - Inserir produto\n");
@@ -61,26 +70,57 @@ void listagemDeOpcoes() {
     printf("0 - SAIR\n\n");
 }
 
+// Escolha da opção
 void escolherOpcao() {
     printf("Digite uma das opções acima: ");
     scanf("%d", &opcao);
 }
 
-void executeMenu() {
+// Execução do menu
+void execucaoMenu() {
     listagemDeOpcoes();
     escolherOpcao();
 }
 
-void insertMenu() {
-    printf("Insira o código:");
+// Exibição do estoque
+void menuExibir() {
+    exibirEstoque(&estoque);
+}
+
+// Inserção de um produto
+void menuInserir() {
+    printf("Insira o código: ");
     scanf("%d", &produto.codigo);
-    printf("Insira o nome:");
-    scanf("%s", produto.nome);
-    printf("Insira a quantidade:");
+    printf("Insira o descricao: ");
+    scanf("%s", produto.descricao);
+    printf("Insira o categoria: ");
+    scanf("%s", produto.categoria);
+    printf("Insira a quantidade: ");
     scanf("%d", &produto.quantidade);
-    printf("Insira o preço:");
+    printf("Insira o preço: ");
     scanf("%lf", &produto.preco);
-    adicionarProduto(&estoque, produto.codigo, produto.nome, produto.quantidade, produto.preco);
+    adicionarProduto(&estoque, produto.codigo, produto.descricao, produto.categoria, produto.preco, produto.quantidade);
     adicionar(&estoque);
 }
 
+// Remoção de um produto
+void menuRemover() {
+    int codigo;
+    printf("Digite o código do produto que deseja remover: ");
+    scanf("%d", &codigo);
+    removerProduto(&estoque, codigo);
+}
+
+// Busca de um produto
+void menuProcurar() {
+    int codigo;
+    printf("Digite o código do produto que deseja buscar: ");
+    scanf("%d", &codigo);
+    buscarProduto(&estoque, codigo);
+}
+
+// Tamanho do estoque e capacidade total
+void menuTamanho() {
+    printf("Tamanho atual: %d\nCapacidade Total: %d\n", tamanhoEstoque(&estoque),
+           capacidadeEstoque(&estoque));
+}

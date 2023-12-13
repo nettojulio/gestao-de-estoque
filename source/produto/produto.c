@@ -6,12 +6,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../utils/utils.h"
 
 #define TAMANHO_INICIAL 10
 
 // Inicializa o estoque com valores padrão
 void inicializarEstoque(Estoque *estoque) {
+    // Aloca memória para o array de produtos dinamicamente
     estoque->produtos = (Produto *) malloc(TAMANHO_INICIAL * sizeof(Produto));
+    // Caso a alocação falhe, exibe uma mensagem de erro e encerra o programa
     if (estoque->produtos == NULL) {
         fprintf(stderr, "Erro na alocação de memória.\n");
         exit(EXIT_FAILURE);
@@ -22,12 +25,16 @@ void inicializarEstoque(Estoque *estoque) {
 }
 
 // Adiciona um produto ao estoque
-void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quantidade, double preco) {
+void
+adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco,
+                 int quantidade) {
     // Verifica se há espaço suficiente no array
     if (estoque->tamanho == estoque->capacidade) {
         // Se não houver espaço suficiente, redimensiona o array com mais 10 posições
         estoque->capacidade += 10;
         estoque->produtos = (Produto *) realloc(estoque->produtos, estoque->capacidade * sizeof(Produto));
+
+        // Caso o realloc falhe, exibe uma mensagem de erro e encerra o programa
         if (estoque->produtos == NULL) {
             fprintf(stderr, "Erro na realocação de memória.\n");
             exit(EXIT_FAILURE);
@@ -35,55 +42,68 @@ void adicionarProduto(Estoque *estoque, int codigo, const char nome[], int quant
 
     }
 
+    // Verifica se o código já foi cadastrado
     for (int i = 0; i < estoque->tamanho; ++i) {
         if (estoque->produtos[i].codigo == codigo) {
             printf("\n\033[1;31m[ ERRO ]: CÓDIGO JÁ CADASTRADO!\033[0m\n");
-            printf("Código\t\tNome\t\t\t\tQuantidade\t\tPreço\n");
-            printf("%.06d\t\t%s\t\t\t\t%.10d\t\t%.2lf\n\n", estoque->produtos[i].codigo, estoque->produtos[i].nome,
-                   estoque->produtos[i].quantidade, estoque->produtos[i].preco);
-            return;
-        }
-
-        if (preco < 0) {
-            printf("\n\033[1;31m[ ERRO ]: PREÇO INVÁLIDO!\033[0m\n");
-            return;
-        }
-
-        if (quantidade < 0) {
-            printf("\n\033[1;31m[ ERRO ]: QUANTIDADE INVÁLIDA!\033[0m\n");
-            return;
-        }
-
-        if (strlen(nome) > 50 || strlen(nome) < 1) {
-            printf("\n\033[1;31m[ ERRO ]: NOME INVÁLIDO!\033[0m\n");
+            imprimirCabecalho();
+            imprimirProduto(estoque->produtos[i].codigo,
+                            estoque->produtos[i].descricao,
+                            estoque->produtos[i].categoria, estoque->produtos[i].quantidade,
+                            estoque->produtos[i].preco);
+            printf("\n");
             return;
         }
     }
 
+    // Verifica se todos os dados informados são válidos
 
+    if (codigo <= 0) {
+        printf("\n\033[1;31m[ ERRO ]: CÓDIGO INVÁLIDO!\033[0m\n");
+        return;
+    }
+
+    if (preco < 0) {
+        printf("\n\033[1;31m[ ERRO ]: PREÇO INVÁLIDO!\033[0m\n");
+        return;
+    }
+
+    if (quantidade < 0) {
+        printf("\n\033[1;31m[ ERRO ]: QUANTIDADE INVÁLIDA!\033[0m\n");
+        return;
+    }
+
+    if (strlen(descricao) > 50 || strlen(descricao) < 1) {
+        printf("\n\033[1;31m[ ERRO ]: DESCRIÇÃO INVÁLIDA!\033[0m\n");
+        return;
+    }
+
+    if (strlen(categoria) > 15 || strlen(categoria) < 1) {
+        printf("\n\033[1;31m[ ERRO ]: CATEGORIA INVÁLIDA!\033[0m\n");
+        return;
+    }
 
     // Adiciona o produto ao array
     estoque->produtos[estoque->tamanho].codigo = codigo;
-    strncpy(estoque->produtos[estoque->tamanho].nome, nome, sizeof(estoque->produtos[estoque->tamanho].nome) - 1);
-    estoque->produtos[estoque->tamanho].quantidade = quantidade;
+    strncpy(estoque->produtos[estoque->tamanho].descricao, descricao,
+            sizeof(estoque->produtos[estoque->tamanho].descricao) - 1);
+    strncpy(estoque->produtos[estoque->tamanho].categoria, categoria,
+            sizeof(estoque->produtos[estoque->tamanho].categoria) - 1);
     estoque->produtos[estoque->tamanho].preco = preco;
+    estoque->produtos[estoque->tamanho].quantidade = quantidade;
     estoque->tamanho++;
     printf("\033[1;32mPRODUTO CADASTRADO!\033[0m\n\n");
 }
 
 // Exibe o conteúdo do estoque
 void exibirEstoque(Estoque *estoque) {
-    printf("Código\t\tNome\t\t\t\tQuantidade\t\tPreço\n");
+    imprimirCabecalho();
     for (int i = 0; i < estoque->tamanho; ++i) {
-        printf("%.06d\t\t%s\t\t\t\t%.10d\t\t%.2lf\n", estoque->produtos[i].codigo, estoque->produtos[i].nome,
-               estoque->produtos[i].quantidade, estoque->produtos[i].preco);
+        imprimirProduto(estoque->produtos[i].codigo,
+                        estoque->produtos[i].descricao,
+                        estoque->produtos[i].categoria, estoque->produtos[i].quantidade, estoque->produtos[i].preco);
     }
     printf("\n");
-}
-
-// Libera a memória alocada para o array de produtos
-void liberarEstoque(Estoque *estoque) {
-    free(estoque->produtos);
 }
 
 // Informa o tamanho do estoque
@@ -108,17 +128,33 @@ int buscarPosicaoDoProduto(Estoque *estoque, int codigo) {
     return searchIndex;
 }
 
+// Busca um produto com base no codigo informado
+void buscarProduto(Estoque *estoque, int codigo) {
+    int index = buscarPosicaoDoProduto(estoque, codigo);
+    if (index == -1) {
+        printf("\n\033[1;31m[ ERRO ]: CÓDIGO NÃO ENCONTRADO!\033[0m\n\n");
+        return;
+    }
+    imprimirCabecalho();
+    imprimirProduto(estoque->produtos[index].codigo, estoque->produtos[index].descricao,
+                    estoque->produtos[index].categoria,
+                    estoque->produtos[index].quantidade, estoque->produtos[index].preco);
+    printf("\n");
+
+}
+
 // Preenche com valores default a ultima posição do estoque
 /*void nularUltimoProduto(Estoque *estoque) {
     estoque->produtos[estoque->tamanho - 1].codigo = USER_ADDR_NULL;
 
-    char nome[50];
-    stpcpy(estoque->produtos[estoque->tamanho - 1].nome, nome);
+    char descricao[50];
+    stpcpy(estoque->produtos[estoque->tamanho - 1].descricao, descricao);
+
+    char categoria[15];
+    stpcpy(estoque->produtos[estoque->tamanho - 1].categoria, categoria);
 
     estoque->produtos[estoque->tamanho - 1].quantidade = USER_ADDR_NULL;
     estoque->produtos[estoque->tamanho - 1].preco = USER_ADDR_NULL;
-
-    printf("%s", estoque->produtos[estoque->tamanho - 1].nome);
 }
 */
 // Remove um produto com base no codigo informado
