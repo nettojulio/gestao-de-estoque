@@ -270,4 +270,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+estoque
+
 # End of https://www.toptal.com/developers/gitignore/api/c,clion,visualstudiocode,linux,macos,windows,codeblocks
