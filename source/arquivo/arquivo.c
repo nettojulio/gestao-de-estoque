@@ -2,10 +2,10 @@
 // Created by gabriel on 12/12/23.
 //
 
+#include "arquivo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "../produto/produto.h"
-#include "arquivo.h"
 
 void adicionar(Estoque *estoque){
     //abrindo o arquivo com tipo de abertura w
@@ -18,7 +18,8 @@ void adicionar(Estoque *estoque){
     }else{
         printf("\n");
         //usando fprintf para armazenar a string no arquivo
-        fprintf(pont_arq, "Nome do produto:%s\n", estoque->produtos->nome);
+        fprintf(pont_arq, "Descrição do produto:%s\n", estoque->produtos->descricao);
+        fprintf(pont_arq, "Categoria do produto:%s\n", estoque->produtos->categoria);
         fprintf(pont_arq, "Preço do produto:%lf\n", estoque->produtos->preco);
         fprintf(pont_arq, "Quantidade do produto:%d\n", estoque->produtos->quantidade);
         fprintf(pont_arq, "Código do produto:%d\n", estoque->produtos->codigo);
