@@ -16,5 +16,5 @@ void imprimirCabecalho() {
 }
 
 void imprimirProduto(unsigned int codigo, char *descricao, char *categoria, unsigned int quantidade, double preco) {
-    printf("%.06d\t\t%-50s\t%-15s\t%.10d\t\t%.2lf\n", codigo, descricao, categoria, quantidade, preco);
+    printf("%-6d\t\t%-50s\t%-15s\t%-10d\t\t%.2lf\n", codigo, descricao, categoria, quantidade, preco);
 }
