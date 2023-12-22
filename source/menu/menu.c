@@ -4,6 +4,7 @@
 
 #include "menu.h"
 #include <stdio.h>
+#include <string.h>
 #include "../produto/produto.h"
 #include "../arquivo/arquivo.h"
 
@@ -89,16 +90,22 @@ void menuExibir() {
 
 // Inserção de um produto
 void menuInserir() {
+
     printf("Insira o código: ");
     scanf("%d", &produto.codigo);
+    limparBufferEntrada();
     printf("Insira o descricao: ");
-    scanf("%s", produto.descricao);
+    fgets(produto.descricao, 50, stdin);
+    produto.descricao[strcspn(produto.descricao, "\n")] = '\0'; // Remove a quebra de linha
     printf("Insira o categoria: ");
-    scanf("%s", produto.categoria);
+    fgets(produto.categoria, 15, stdin);
+    produto.categoria[strcspn(produto.categoria, "\n")] = '\0'; // Remove a quebra de linha
     printf("Insira a quantidade: ");
     scanf("%d", &produto.quantidade);
+    limparBufferEntrada();
     printf("Insira o preço: ");
     scanf("%lf", &produto.preco);
+    limparBufferEntrada();
     adicionarProduto(&estoque, produto.codigo, produto.descricao, produto.categoria, produto.preco, produto.quantidade);
     adicionar(&estoque);
 }

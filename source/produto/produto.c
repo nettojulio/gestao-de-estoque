@@ -173,4 +173,7 @@ void removerProduto(Estoque *estoque, int codigo) {
 */
     printf("\033[1;32mPRODUTO REMOVIDO!\033[0m\n\n");
 }
-
+void limparBufferEntrada() {
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF);
+}

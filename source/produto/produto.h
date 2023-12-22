@@ -39,4 +39,6 @@ int buscarPosicaoDoProduto(Estoque *estoque, int codigo);
 
 void removerProduto(Estoque *estoque, int codigo);
 
+void limparBufferEntrada();
+
 #endif //GESTAO_DE_ESTOQUE_PRODUTO_H

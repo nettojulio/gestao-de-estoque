@@ -23,7 +23,6 @@ void adicionar(Estoque *estoque){
         fprintf(pont_arq, "Preço do produto:%lf\n", estoque->produtos->preco);
         fprintf(pont_arq, "Quantidade do produto:%d\n", estoque->produtos->quantidade);
         fprintf(pont_arq, "Código do produto:%d\n", estoque->produtos->codigo);
-        printf("\033[1;32mDADOS GRAVADOS COM SUCESSO!\033[0m\n\n");
     }
 
      //usando fclose para fechar o arquivo
