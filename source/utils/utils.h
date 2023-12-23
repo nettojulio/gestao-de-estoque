@@ -10,4 +10,6 @@ void imprimirCabecalho();
 
 void imprimirProduto(unsigned int codigo, char *descricao, char *categoria, unsigned int quantidade, double preco);
 
+void limparBufferEntrada();
+
 #endif //GESTAO_DE_ESTOQUE_UTILS_H

@@ -2,29 +2,47 @@
 // Created by gabriel on 12/12/23.
 //
 
-#include "arquivo.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include "../produto/produto.h"
-//Função que adiciona o produto no arquivo
-void adicionar(Estoque *estoque){
-    //abrindo o arquivo com tipo de abertura a
-    FILE *pont_arq = fopen("arquivo.txt", "a");
+#include "arquivo.h"
 
-    //testando se o arquivo foi realmente criado
-    if( pont_arq == NULL)
-    {
-        printf("Erro na abertura do arquivo!");
-    }else{
-        printf("\n");
-        //usando fprintf para armazenar a string no arquivo
-        fprintf(pont_arq, "Descrição do produto:%s\n", estoque->produtos->descricao);
-        fprintf(pont_arq, "Categoria do produto:%s\n", estoque->produtos->categoria);
-        fprintf(pont_arq, "Preço do produto:%.2lf\n", estoque->produtos->preco);
-        fprintf(pont_arq, "Quantidade do produto:%d\n", estoque->produtos->quantidade);
-        fprintf(pont_arq, "Código do produto:%d\n", estoque->produtos->codigo);
+void armazenarDados(const char *nomeArquivo, const char *dados) {
+    FILE *arquivo = fopen(nomeArquivo,
+                          "a");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para escrita.\n");
+        return;
     }
 
-    //usando fclose para fechar o arquivo
-    fclose(pont_arq);
+    fprintf(arquivo, "%s\n", dados);
+    fclose(arquivo);
+    printf("Dados armazenados com sucesso no arquivo: %s\n", nomeArquivo);
+}
+
+void lerDadosDoArquivo(const char *nomeArquivo, Estoque *estoque) {
+    FILE *arquivo = fopen(nomeArquivo, "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return;
+    }
+
+    printf("Conteúdo do arquivo %s:\n", nomeArquivo);
+
+    char linha[100];
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        int codigo;
+        char nome[50];
+        char tipo[50];
+        int quantidade;
+        float preco;
+
+        sscanf(linha, "%d;%49[^;];%49[^;];%f;%d", &codigo, nome, tipo, &preco, &quantidade);
+
+        if (buscarPosicaoDoProduto(estoque, codigo) == -1) {
+            adicionarProduto(estoque, codigo, nome, tipo, preco, quantidade, 'r');
+        }
+    }
+
+    fclose(arquivo);
 }

@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../produto/produto.h"
-#include "../arquivo/arquivo.h"
+#include "../utils/utils.h"
 
 void execucaoMenu();//Função de executar o menu
 
@@ -20,6 +20,7 @@ void menuProcurar();//Função de Procurar
 
 void menuTamanho();//Função que verifica o tamanho do vetor e quantas posições estão ocupadas
 
+
 int opcao;
 Estoque estoque;
 Produto produto;
@@ -27,7 +28,9 @@ Produto produto;
 // Menu pricipal com as opcoes disponiveis
 void menu() {
     inicializarEstoque(&estoque);
+    recuperarProdutos(&estoque);
     execucaoMenu();
+
     while (opcao != 0) {
         switch (opcao) {
             case 1:
@@ -104,9 +107,9 @@ void menuInserir() {
     limparBufferEntrada(); //Removendo o Buffer
     printf("Insira o preço: ");
     scanf("%lf", &produto.preco);
-    limparBufferEntrada();//Removendo o Buffer
-    adicionarProduto(&estoque, produto.codigo, produto.descricao, produto.categoria, produto.preco, produto.quantidade);//Adiciona o Produto ao Estoque
-    adicionar(&estoque);//Adiciona o produto ao arquivo
+    limparBufferEntrada();
+    adicionarProduto(&estoque, produto.codigo, produto.descricao, produto.categoria, produto.preco, produto.quantidade,
+                     'a');
 }
 
 // Remoção de um produto

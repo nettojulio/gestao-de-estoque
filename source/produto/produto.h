@@ -25,7 +25,9 @@ typedef struct {
 
 void inicializarEstoque(Estoque *estoque);
 
-void adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco, int quantidade);
+void
+adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco,
+                 int quantidade, char operacao);
 
 void exibirEstoque(Estoque *estoque);
 
@@ -39,6 +41,6 @@ int buscarPosicaoDoProduto(Estoque *estoque, int codigo);
 
 void removerProduto(Estoque *estoque, int codigo);
 
-void limparBufferEntrada();
+void recuperarProdutos(Estoque *estoque);
 
 #endif //GESTAO_DE_ESTOQUE_PRODUTO_H

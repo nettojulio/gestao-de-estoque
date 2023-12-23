@@ -7,8 +7,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../utils/utils.h"
+#include "../arquivo/arquivo.h"
 
 #define TAMANHO_INICIAL 10
+
+#define NOME_DO_ARQUIVO "dados.txt"
+
+const char *nomeArquivo = NOME_DO_ARQUIVO;
 
 // Inicializa o estoque com valores padrão
 void inicializarEstoque(Estoque *estoque) {
@@ -25,8 +30,9 @@ void inicializarEstoque(Estoque *estoque) {
 }
 
 // Adiciona um produto ao estoque
-void adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco,
-                 int quantidade) {
+void
+adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco,
+                 int quantidade, char operacao) {
     // Verifica se há espaço suficiente no array
     if (estoque->tamanho == estoque->capacidade) {
         // Se não houver espaço suficiente, redimensiona o array com mais 10 posições
@@ -91,7 +97,16 @@ void adicionarProduto(Estoque *estoque, unsigned int codigo, const char descrica
     estoque->produtos[estoque->tamanho].preco = preco;
     estoque->produtos[estoque->tamanho].quantidade = quantidade;
     estoque->tamanho++;
-    printf("\033[1;32mPRODUTO CADASTRADO!\033[0m\n\n");
+
+    if (operacao != 'r') {
+        char resultado[100];
+
+        sprintf(resultado, "%u;%s;%s;%.2lf;%u", codigo, descricao, categoria, preco, quantidade);
+
+        armazenarDados(nomeArquivo, resultado);
+        printf("\033[1;32mPRODUTO CADASTRADO!\033[0m\n\n");
+    }
+
 }
 
 // Exibe o conteúdo do estoque
@@ -143,7 +158,7 @@ void buscarProduto(Estoque *estoque, int codigo) {
 }
 
 // Preenche com valores default a ultima posição do estoque
-/*void nularUltimoProduto(Estoque *estoque) {
+void nularUltimoProduto(Estoque *estoque) {
     estoque->produtos[estoque->tamanho - 1].codigo = USER_ADDR_NULL;
 
     char descricao[50];
@@ -155,7 +170,6 @@ void buscarProduto(Estoque *estoque, int codigo) {
     estoque->produtos[estoque->tamanho - 1].quantidade = USER_ADDR_NULL;
     estoque->produtos[estoque->tamanho - 1].preco = USER_ADDR_NULL;
 }
-*/
 
 // Remove um produto com base no codigo informado
 void removerProduto(Estoque *estoque, int codigo) {
@@ -168,13 +182,12 @@ void removerProduto(Estoque *estoque, int codigo) {
     for (int i = searchIndex; i < estoque->tamanho - 1; ++i) {
         estoque->produtos[i] = estoque->produtos[i + 1];
     }
-    /*nularUltimoProduto(estoque);
+    nularUltimoProduto(estoque);
     estoque->tamanho--;
-*/
+
     printf("\033[1;32mPRODUTO REMOVIDO!\033[0m\n\n");
 }
-//Limpa o Buffer dos valores de entrada
-void limparBufferEntrada() {
-    int ch;
-    while ((ch = getchar()) != '\n' && ch != EOF);
+
+void recuperarProdutos(Estoque *estoque) {
+    lerDadosDoArquivo(nomeArquivo, estoque);
 }
