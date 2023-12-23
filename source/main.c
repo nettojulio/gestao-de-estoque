@@ -4,6 +4,7 @@
 
 //Função main
 int main() {
-    menu(); //Inicializando o menu
+    //Inicializando o menu
+    menu();
     return 0;
 }

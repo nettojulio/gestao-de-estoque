@@ -8,8 +8,10 @@
 // Protótipos das funções do cabeçalho
 void imprimirCabecalho();
 
+// Imprime os dados de um produto
 void imprimirProduto(unsigned int codigo, char *descricao, char *categoria, unsigned int quantidade, double preco);
 
+// Limpa o buffer de entrada
 void limparBufferEntrada();
 
 #endif //GESTAO_DE_ESTOQUE_UTILS_H

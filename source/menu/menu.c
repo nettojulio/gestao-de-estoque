@@ -27,33 +27,41 @@ Produto produto;
 
 // Menu pricipal com as opcoes disponiveis
 void menu() {
+    // Inicializa o estoque
     inicializarEstoque(&estoque);
+
+    // Recupera os produtos do arquivo dados.txt
     recuperarProdutos(&estoque);
+
+    // Executa o menu
     execucaoMenu();
 
     while (opcao != 0) {
         switch (opcao) {
             case 1:
+                // Exibe o estoque
                 printf("\nLISTAR\n\n");
                 menuExibir();
                 break;
             case 2:
+                // Insere um produto
                 printf("\nINSERIR\n\n");
                 menuInserir();
                 break;
             case 3:
+                // Remove um produto
                 printf("\nREMOVER\n\n");
                 menuRemover();
                 break;
             case 4:
+                // Procura um produto
                 printf("\nPROCURAR\n\n");
                 menuProcurar();
                 break;
             case 5:
+                // Verifica o tamanho do estoque
                 printf("\nTAMANHO\n\n");
                 menuTamanho();
-                break;
-            case 6:
                 break;
             default:
                 printf("\n\033[1;31m[ ERRO ]: OPÇÃO INVÁLIDA!\033[0m\n\n");
@@ -108,6 +116,7 @@ void menuInserir() {
     printf("Insira o preço: ");
     scanf("%lf", &produto.preco);
     limparBufferEntrada();
+    // Adiciona o produto ao estoque
     adicionarProduto(&estoque, produto.codigo, produto.descricao, produto.categoria, produto.preco, produto.quantidade,
                      'a');
 }
@@ -130,6 +139,6 @@ void menuProcurar() {
 
 // Tamanho do estoque e capacidade total
 void menuTamanho() {
-    printf("Tamanho atual: %d\nCapacidade Total: %d\n", tamanhoEstoque(&estoque),
+    printf("Tamanho atual: %d\nCapacidade Total: %d\n\n", tamanhoEstoque(&estoque),
            capacidadeEstoque(&estoque));
 }

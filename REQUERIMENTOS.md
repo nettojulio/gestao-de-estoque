@@ -9,7 +9,7 @@
    - [ ] Gestão de biblioteca.
 2. O sistema deve armazenar os dados cadastrados utilizando:
    - [x] Alocação dinâmica de memória.
-   - [-] Arquivos.
+   - [x] Arquivos.
    - [x] Armazenar, inicialmente, 10 registros (alunos, tarefas, produtos ou livros).
    - [x] Aumentar a capacidade em 10 novos registros sempre que necessário com alocação dinâmica.
 3. Cada funcionalidade deve ser implementada:
@@ -54,5 +54,5 @@
      - [x] Outra possibilidade é a de exibir os dados de um único registro a partir de seu identificador, caso este esteja cadastrado;
 5. **Arquivo texto**
    - [x] um arquivo de texto deverá ser criado e manipulado através das funções.
-   - [-] O arquivo terá que ser acessado em todas as funcionalidades que necessitem inserir, alterar, remover ou apresentar os dados.
-   - [-] Todas as informações inseridas, alteradas ou removidas deverão estar refletidas no arquivo;
+   - [x] O arquivo terá que ser acessado em todas as funcionalidades que necessitem inserir, alterar, remover ou apresentar os dados.
+   - [x] Todas as informações inseridas, alteradas ou removidas deverão estar refletidas no arquivo;

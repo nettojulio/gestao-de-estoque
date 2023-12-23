@@ -21,6 +21,7 @@ void imprimirProduto(unsigned int codigo, char *descricao, char *categoria, unsi
     printf("%-6d\t\t%-50s\t%-15s\t%-10d\t\t%.2lf\n", codigo, descricao, categoria, quantidade, preco);
 }
 
+
 void limparBufferEntrada() {
     int ch;
     while ((ch = getchar()) != '\n' && ch != EOF);
