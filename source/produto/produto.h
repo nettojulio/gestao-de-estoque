@@ -43,4 +43,8 @@ void removerProduto(Estoque *estoque, int codigo);
 
 void recuperarProdutos(Estoque *estoque);
 
+void removerTodosProdutos();
+
+int removerLinhaPorID(const char *nomeArquivo, int idParaRemover);
+
 #endif //GESTAO_DE_ESTOQUE_PRODUTO_H

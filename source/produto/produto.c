@@ -13,6 +13,8 @@
 
 #define NOME_DO_ARQUIVO "dados.txt"
 
+#define TAMANHO_MAX_LINHA 100
+
 const char *nomeArquivo = NOME_DO_ARQUIVO;
 
 // Inicializa o estoque com valores padrão
@@ -185,9 +187,70 @@ void removerProduto(Estoque *estoque, int codigo) {
     nularUltimoProduto(estoque);
     estoque->tamanho--;
 
+    removerLinhaPorID(nomeArquivo, codigo);
+
     printf("\033[1;32mPRODUTO REMOVIDO!\033[0m\n\n");
 }
 
 void recuperarProdutos(Estoque *estoque) {
     lerDadosDoArquivo(nomeArquivo, estoque);
+}
+
+void removerTodosProdutos() {
+    if (remove(nomeArquivo) == 0) {
+        printf("Arquivo '%s' removido com sucesso.\n", nomeArquivo);
+    } else {
+        perror("Erro ao remover o arquivo");
+    }
+}
+
+int removerLinhaPorID(const char *nomeArquivo, int idParaRemover) {
+    FILE *arquivoOriginal, *arquivoNovo;
+    char linha[TAMANHO_MAX_LINHA];
+    int idLido;
+    int encontrado = 0;
+
+    arquivoOriginal = fopen(nomeArquivo, "r");
+    if (arquivoOriginal == NULL) {
+        perror("Erro ao abrir o arquivo para leitura");
+        return 1;
+    }
+
+    arquivoNovo = fopen("temporario.txt", "w");
+    if (arquivoNovo == NULL) {
+        perror("Erro ao criar o arquivo temporário para escrita");
+        fclose(arquivoOriginal);
+        return 1;
+    }
+
+    while (fgets(linha, TAMANHO_MAX_LINHA, arquivoOriginal) != NULL) {
+        sscanf(linha, "%d", &idLido);
+
+        if (idLido != idParaRemover) {
+            fputs(linha, arquivoNovo);
+        } else {
+            encontrado = 1;
+        }
+    }
+
+    fclose(arquivoOriginal);
+    fclose(arquivoNovo);
+
+    if (remove(nomeArquivo) != 0) {
+        perror("Erro ao remover o arquivo original");
+        return 1;
+    }
+
+    if (rename("temporario.txt", nomeArquivo) != 0) {
+        perror("Erro ao renomear o arquivo temporário");
+        return 1;
+    }
+
+    if (encontrado) {
+        printf("Linha com ID %d removida com sucesso.\n", idParaRemover);
+    } else {
+        printf("ID %d não encontrado no arquivo.\n", idParaRemover);
+    }
+
+    return 0;
 }
