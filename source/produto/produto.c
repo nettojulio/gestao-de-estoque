@@ -27,7 +27,10 @@ void inicializarEstoque(Estoque *estoque) {
         exit(EXIT_FAILURE);
     }
 
+    // Inicializa os valores do estoque
     estoque->capacidade = TAMANHO_INICIAL;
+
+    // Inicializa o tamanho do estoque
     estoque->tamanho = 0;
 }
 
@@ -35,10 +38,12 @@ void inicializarEstoque(Estoque *estoque) {
 void
 adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco,
                  int quantidade, char operacao) {
+
     // Verifica se há espaço suficiente no array
     if (estoque->tamanho == estoque->capacidade) {
         // Se não houver espaço suficiente, redimensiona o array com mais 10 posições
         estoque->capacidade += 10;
+        // Realoca memória para o array de produtos dinamicamente
         estoque->produtos = (Produto *) realloc(estoque->produtos, estoque->capacidade * sizeof(Produto));
 
         // Caso o realloc falhe, exibe uma mensagem de erro e encerra o programa
@@ -64,27 +69,30 @@ adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], 
     }
 
     // Verifica se todos os dados informados são válidos
-
     if (codigo <= 0) {
         printf("\n\033[1;31m[ ERRO ]: CÓDIGO INVÁLIDO!\033[0m\n");
         return;
     }
 
+    // Verifica se todos os dados informados são válidos
     if (preco < 0) {
         printf("\n\033[1;31m[ ERRO ]: PREÇO INVÁLIDO!\033[0m\n");
         return;
     }
 
+    // Verifica se todos os dados informados são válidos
     if (quantidade < 0) {
         printf("\n\033[1;31m[ ERRO ]: QUANTIDADE INVÁLIDA!\033[0m\n");
         return;
     }
 
+    // Verifica se todos os dados informados são válidos
     if (strlen(descricao) > 50 || strlen(descricao) < 1) {
         printf("\n\033[1;31m[ ERRO ]: DESCRIÇÃO INVÁLIDA!\033[0m\n");
         return;
     }
 
+    // Verifica se todos os dados informados são válidos
     if (strlen(categoria) > 15 || strlen(categoria) < 1) {
         printf("\n\033[1;31m[ ERRO ]: CATEGORIA INVÁLIDA!\033[0m\n");
         return;
@@ -100,6 +108,7 @@ adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], 
     estoque->produtos[estoque->tamanho].quantidade = quantidade;
     estoque->tamanho++;
 
+    // Armazena os dados no arquivo
     if (operacao != 'r') {
         char resultado[100];
 
@@ -160,18 +169,18 @@ void buscarProduto(Estoque *estoque, int codigo) {
 }
 
 // Preenche com valores default a ultima posição do estoque
-void nularUltimoProduto(Estoque *estoque) {
-    estoque->produtos[estoque->tamanho - 1].codigo = USER_ADDR_NULL;
-
-    char descricao[50];
-    stpcpy(estoque->produtos[estoque->tamanho - 1].descricao, descricao);
-
-    char categoria[15];
-    stpcpy(estoque->produtos[estoque->tamanho - 1].categoria, categoria);
-
-    estoque->produtos[estoque->tamanho - 1].quantidade = USER_ADDR_NULL;
-    estoque->produtos[estoque->tamanho - 1].preco = USER_ADDR_NULL;
-}
+//void nularUltimoProduto(Estoque *estoque) {
+//    estoque->produtos[estoque->tamanho - 1].codigo = USER_ADDR_NULL;
+//
+//    char descricao[50];
+//    stpcpy(estoque->produtos[estoque->tamanho - 1].descricao, descricao);
+//
+//    char categoria[15];
+//    stpcpy(estoque->produtos[estoque->tamanho - 1].categoria, categoria);
+//
+//    estoque->produtos[estoque->tamanho - 1].quantidade = USER_ADDR_NULL;
+//    estoque->produtos[estoque->tamanho - 1].preco = USER_ADDR_NULL;
+//}
 
 // Remove um produto com base no codigo informado
 void removerProduto(Estoque *estoque, int codigo) {
@@ -184,9 +193,10 @@ void removerProduto(Estoque *estoque, int codigo) {
     for (int i = searchIndex; i < estoque->tamanho - 1; ++i) {
         estoque->produtos[i] = estoque->produtos[i + 1];
     }
-    nularUltimoProduto(estoque);
+//    nularUltimoProduto(estoque);
     estoque->tamanho--;
 
+    // Remove o produto do arquivo dados.txt
     removerLinhaPorID(nomeArquivo, codigo);
 
     printf("\033[1;32mPRODUTO REMOVIDO!\033[0m\n\n");
@@ -210,12 +220,13 @@ int removerLinhaPorID(const char *nomeArquivo, int idParaRemover) {
     int idLido;
     int encontrado = 0;
 
+    // Abre o arquivo para leitura
     arquivoOriginal = fopen(nomeArquivo, "r");
     if (arquivoOriginal == NULL) {
         perror("Erro ao abrir o arquivo para leitura");
         return 1;
     }
-
+// Abre o arquivo temporário para escrita
     arquivoNovo = fopen("temporario.txt", "w");
     if (arquivoNovo == NULL) {
         perror("Erro ao criar o arquivo temporário para escrita");
@@ -223,9 +234,11 @@ int removerLinhaPorID(const char *nomeArquivo, int idParaRemover) {
         return 1;
     }
 
+    // Lê o arquivo original linha por linha
     while (fgets(linha, TAMANHO_MAX_LINHA, arquivoOriginal) != NULL) {
         sscanf(linha, "%d", &idLido);
 
+        // Se o ID lido for diferente do ID que deve ser removido, escreve a linha no arquivo temporário
         if (idLido != idParaRemover) {
             fputs(linha, arquivoNovo);
         } else {
@@ -241,6 +254,7 @@ int removerLinhaPorID(const char *nomeArquivo, int idParaRemover) {
         return 1;
     }
 
+    // Remove o arquivo original e renomeia o arquivo temporário para o nome do arquivo original
     if (rename("temporario.txt", nomeArquivo) != 0) {
         perror("Erro ao renomear o arquivo temporário");
         return 1;

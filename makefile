@@ -5,7 +5,7 @@ gef:
 	@gcc -c source/produto/produto.c -o build/produto.o
 	@gcc -c source/utils/utils.c -o build/utils.o
 	@gcc -c source/arquivo/arquivo.c -o build/arquivo.o
-	@gcc build/main.o build/menu.o build/produto.o build/utils.o build/arquivo.o -o estoque
+	@gcc build/main.o build/menu.o build/produto.o build/utils.o build/arquivo.o -o gestao_de_estoque
 	@rm build/*.o
 run:
 	@make gef
