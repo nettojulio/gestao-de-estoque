@@ -2,7 +2,8 @@
 #include "./menu/menu.h"
 #include "./produto/produto.h"
 
+//Função main
 int main() {
-    menu();
+    menu(); //Inicializando o menu
     return 0;
 }

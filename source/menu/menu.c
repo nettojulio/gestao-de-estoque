@@ -8,22 +8,21 @@
 #include "../produto/produto.h"
 #include "../arquivo/arquivo.h"
 
-void execucaoMenu();
+void execucaoMenu();//Função de executar o menu
 
-void menuExibir();
+void menuExibir();//Função de Exibir
 
-void menuInserir();
+void menuInserir();//Função de Inserir
 
-void menuRemover();
+void menuRemover();//Função de Remover
 
-void menuProcurar();
+void menuProcurar();//Função de Procurar
 
-void menuTamanho();
+void menuTamanho();//Função que verifica o tamanho do vetor e quantas posições estão ocupadas
 
 int opcao;
 Estoque estoque;
 Produto produto;
-Arquivo arquivo;
 
 // Menu pricipal com as opcoes disponiveis
 void menu() {
@@ -93,7 +92,7 @@ void menuInserir() {
 
     printf("Insira o código: ");
     scanf("%d", &produto.codigo);
-    limparBufferEntrada();
+    limparBufferEntrada();//Removendo o Buffer
     printf("Insira o descricao: ");
     fgets(produto.descricao, 50, stdin);
     produto.descricao[strcspn(produto.descricao, "\n")] = '\0'; // Remove a quebra de linha
@@ -102,12 +101,12 @@ void menuInserir() {
     produto.categoria[strcspn(produto.categoria, "\n")] = '\0'; // Remove a quebra de linha
     printf("Insira a quantidade: ");
     scanf("%d", &produto.quantidade);
-    limparBufferEntrada();
+    limparBufferEntrada(); //Removendo o Buffer
     printf("Insira o preço: ");
     scanf("%lf", &produto.preco);
-    limparBufferEntrada();
-    adicionarProduto(&estoque, produto.codigo, produto.descricao, produto.categoria, produto.preco, produto.quantidade);
-    adicionar(&estoque);
+    limparBufferEntrada();//Removendo o Buffer
+    adicionarProduto(&estoque, produto.codigo, produto.descricao, produto.categoria, produto.preco, produto.quantidade);//Adiciona o Produto ao Estoque
+    adicionar(&estoque);//Adiciona o produto ao arquivo
 }
 
 // Remoção de um produto

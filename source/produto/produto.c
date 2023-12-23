@@ -25,8 +25,7 @@ void inicializarEstoque(Estoque *estoque) {
 }
 
 // Adiciona um produto ao estoque
-void
-adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco,
+void adicionarProduto(Estoque *estoque, unsigned int codigo, const char descricao[], const char categoria[15], double preco,
                  int quantidade) {
     // Verifica se há espaço suficiente no array
     if (estoque->tamanho == estoque->capacidade) {
@@ -157,6 +156,7 @@ void buscarProduto(Estoque *estoque, int codigo) {
     estoque->produtos[estoque->tamanho - 1].preco = USER_ADDR_NULL;
 }
 */
+
 // Remove um produto com base no codigo informado
 void removerProduto(Estoque *estoque, int codigo) {
     int searchIndex = buscarPosicaoDoProduto(estoque, codigo);
@@ -173,6 +173,7 @@ void removerProduto(Estoque *estoque, int codigo) {
 */
     printf("\033[1;32mPRODUTO REMOVIDO!\033[0m\n\n");
 }
+//Limpa o Buffer dos valores de entrada
 void limparBufferEntrada() {
     int ch;
     while ((ch = getchar()) != '\n' && ch != EOF);

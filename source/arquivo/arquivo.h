@@ -9,11 +9,6 @@
 
 #endif //GESTAO_DE_ESTOQUE_ARQUIVO_H
 
-typedef struct {
-    Estoque *estoque;
-
-} Arquivo;
-
+// Protótipo da função adicionar para arquivo
 void adicionar(Estoque *estoque);
-//void remover(Estoque *estoque);
 

@@ -4,7 +4,7 @@
 
 #include "utils.h"
 #include <stdio.h>
-
+//Imprime o Cabeçalho do sistema
 void imprimirCabecalho() {
     printf("\n\033[1;32m");
     printf("=====================================================================================================\n");
@@ -14,7 +14,7 @@ void imprimirCabecalho() {
     printf("=====================================================================================================\n");
     printf("\033[0m");
 }
-
+//Imprime as informações do produto
 void imprimirProduto(unsigned int codigo, char *descricao, char *categoria, unsigned int quantidade, double preco) {
     printf("%-6d\t\t%-50s\t%-15s\t%-10d\t\t%.2lf\n", codigo, descricao, categoria, quantidade, preco);
 }
