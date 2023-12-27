@@ -9,4 +9,4 @@ gef:
 	@rm build/*.o
 run:
 	@make gef
-	@./estoque
+	@./gestao_de_estoque
